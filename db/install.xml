@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/superset_integration/db" VERSION="2024122300" COMMENT="Schema for Superset Integration plugin">
+    <TABLES>
+
+        <!-- Table to store Superset user-specific settings -->
+        <TABLE NAME="local_superset_user_settings" COMMENT="User-specific settings for Superset">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" SEQUENCE="true" COMMENT="Primary key" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" COMMENT="User ID" />
+                <FIELD NAME="preference" TYPE="text" NOTNULL="false" COMMENT="JSON-encoded user preferences" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" COMMENT="Timestamp of record creation" />
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" COMMENT="Timestamp of last modification" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="userid_fk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" ONDELETE="cascade" />
+            </KEYS>
+        </TABLE>
+
+        <!-- Table to store Superset API usage logs -->
+        <TABLE NAME="local_superset_logs" COMMENT="Logs of API usage for Superset">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" SEQUENCE="true" COMMENT="Primary key" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" COMMENT="User ID" />
+                <FIELD NAME="endpoint" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Superset API endpoint accessed" />
+                <FIELD NAME="parameters" TYPE="text" NOTNULL="false" COMMENT="JSON-encoded parameters sent to the API" />
+                <FIELD NAME="response" TYPE="text" NOTNULL="false" COMMENT="JSON-encoded response from the API" />
+                <FIELD NAME="timeaccessed" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="true" COMMENT="Timestamp of API access" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="userid_fk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" ONDELETE="cascade" />
+            </KEYS>
+        </TABLE>
+
+    </TABLES>
+</XMLDB>
